@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CampsiteInfo } from './CampsiteInfoComponent'
+import CampsiteInfo from './CampsiteInfoComponent'
 import Directory from './DirectoryComponent';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
@@ -25,19 +25,28 @@ class Main extends Component {
     render() {
         const HomePage = () => {
             return (
-                <Home 
-                campsite={this.state.campsites.filter(campsite => campsite.featured)[0]}
-                promotion={this.state.promotions.filter(promotion => promotion.featured)[0]}
-                partner={this.state.partners.filter(partner => partner.featured)[0]}
+                <Home
+                    campsite={this.state.campsites.filter(campsite => campsite.featured)[0]}
+                    promotion={this.state.promotions.filter(promotion => promotion.featured)[0]}
+                    partner={this.state.partners.filter(partner => partner.featured)[0]}
                 />
             );
         };
+
+        const CampsiteWithId = ({ match }) => {
+            return (
+                <CampsiteInfo campsite={this.state.campsites.filter(campsite => campsite.id === +match.params.campsiteId)[0]}
+                    comments={this.state.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)} />
+            );
+        }
+
         return (
             <div>
                 <Header />
                 <Switch>
                     <Route path='/home' component={HomePage} />
-                    <Route exact path='/directory' render={() => <Directory campsites={this.state.campsites}/>} />
+                    <Route exact path='/directory' render={() => <Directory campsites={this.state.campsites} />} />
+                    <Route exact path='/directory/:campsiteId' component={CampsiteWithId} />
                     <Route exact path='/contactus' component={Contact} />
                     <Redirect to='/home' />
                 </Switch>
