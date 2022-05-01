@@ -71,17 +71,17 @@ function About(props) {
 function RenderPartner({ partner }) {
     if (partner) {
         return (
-            <>
+            <React.Fragment>
                 <Media object src={baseUrl + partner.image} alt={partner.name} width='150' />
                 <Media body className='ml-5 mb-4'>
                     <Media heading>{partner.name}
                     </Media>
                     {partner.description}
                 </Media>
-            </>
+            </React.Fragment>
         );
     }
-    return <div></div>
+    return <div/>
 }
 
 function PartnerList(props) {
@@ -89,7 +89,7 @@ function PartnerList(props) {
     const partners = props.partners.partners.map((partner) => {
         return (
             <Fade in key={partner.id}>
-                <Media tag='li' >
+                <Media>
                     <RenderPartner partner={partner} />
                 </Media>
             </Fade>
